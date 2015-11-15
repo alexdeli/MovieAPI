@@ -8,8 +8,9 @@ using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.Google;
 using Microsoft.Owin.Security.OAuth;
 using Owin;
-using MovieAPI.Presentation.Providers;
+using MovieAPI.Domain.Providers;
 using MovieAPI.Models;
+using MovieAPI.Infrastructure;
 
 namespace MovieAPI
 {

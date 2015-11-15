@@ -14,8 +14,9 @@ using Microsoft.Owin.Security;
 using Microsoft.Owin.Security.Cookies;
 using Microsoft.Owin.Security.OAuth;
 using MovieAPI.Models;
-using MovieAPI.Providers;
-using MovieAPI.Results;
+using MovieAPI.Domain.Providers;
+using MovieAPI.Presentation.Results;
+using MovieAPI.Presentation.Models;
 
 namespace MovieAPI.Presentation.Controllers
 {
