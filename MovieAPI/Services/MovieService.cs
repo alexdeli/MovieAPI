@@ -29,6 +29,8 @@ namespace MovieAPI.Services {
             if ((dbMovie = FindInternal(dto.Id)) == null) {
                 dbMovie = new Movie();
             }
+            dbMovie.Title = dto.Title;
+            dbMovie.ReleaseDate = dto.ReleaseDate;
 
             return dbMovie;
         }
