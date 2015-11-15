@@ -30,10 +30,12 @@ namespace MovieAPI.Services {
                 dbMovie = new Movie();
             }
 
+            return dbMovie;
         }
 
         private Movie FindInternal(int id) {
-            return _repo.Find<Movie>(id);
+            return (from m in _repo.Query<Movie>()
+                    select m).FirstOrDefault();
         }
     }
 }
