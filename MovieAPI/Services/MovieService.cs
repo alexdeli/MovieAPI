@@ -10,9 +10,13 @@ namespace MovieAPI.Services {
     public class MovieService {
 
         private IRepository _repo;
+        private PersonService _personService;
+        private GenreService _genreService;
 
-        public MovieService(IRepository repo) {
+        public MovieService(IRepository repo, PersonService personService, GenreService genreService) {
             _repo = repo;
+            _personService = personService;
+            _genreService = genreService;
         }
 
         public MovieDTO Map(Movie movie) {
@@ -21,6 +25,14 @@ namespace MovieAPI.Services {
             dto.Title = movie.Title;
             dto.ReleaseDate = movie.ReleaseDate;
 
+            dto.Actors = (from a in movie.Actors
+                          select _personService.Map(a)).ToList();
+            dto.Directors = (from a in movie.Directors
+                             select _personService.Map(a)).ToList();
+            dto.Producers = (from a in movie.Producers
+                             select _personService.Map(a)).ToList();
+            dto.Genres = (from g in movie.Genres
+                          select _genreService.Map(g)).ToList();
             return dto;
         }
 
@@ -31,6 +43,18 @@ namespace MovieAPI.Services {
             }
             dbMovie.Title = dto.Title;
             dbMovie.ReleaseDate = dto.ReleaseDate;
+            dbMovie.Actors = (from a in _repo.Query<Person>()
+                              where dto.Actors.Any(actor => actor.Id == a.Id)
+                              select a).ToList();
+            dbMovie.Directors = (from a in _repo.Query<Person>()
+                                 where dto.Directors.Any(actor => actor.Id == a.Id)
+                                 select a).ToList();
+            dbMovie.Producers = (from a in _repo.Query<Person>()
+                                 where dto.Producers.Any(actor => actor.Id == a.Id)
+                                 select a).ToList();
+            dbMovie.Genres = (from g in _repo.Query<Genre>()
+                              where dto.Genres.Any(genre => genre.Id == g.Id)
+                              select g).ToList();
 
             return dbMovie;
         }
