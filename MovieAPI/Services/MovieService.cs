@@ -15,7 +15,7 @@ namespace MovieAPI.Services {
             _repo = repo;
         }
 
-        private MovieDTO Map(Movie movie) {
+        public MovieDTO Map(Movie movie) {
             MovieDTO dto = new MovieDTO();
             dto.Id = movie.Id;
             dto.Title = movie.Title;
@@ -24,7 +24,7 @@ namespace MovieAPI.Services {
             return dto;
         }
 
-        private Movie Map(MovieDTO dto) {
+        public Movie Map(MovieDTO dto) {
             Movie dbMovie = null;
             if ((dbMovie = FindInternal(dto.Id)) == null) {
                 dbMovie = new Movie();
@@ -55,6 +55,7 @@ namespace MovieAPI.Services {
                 _repo.Add(dbItem);
             }
             _repo.SaveChanges();
+            dto.Id = dbItem.Id;
         }
 
         public void Delete(int id) {
