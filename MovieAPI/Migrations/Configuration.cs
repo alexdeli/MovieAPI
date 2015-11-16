@@ -31,16 +31,20 @@ namespace MovieAPI.Migrations
 
             var movies = new Movie[] {
                 new Movie {
-                    Title = "The Lord of the Rings"
+                    Title = "The Lord of the Rings",
+                    ReleaseDate = new DateTime(2001, 12, 19)
                 },
                 new Movie {
-                    Title = "The Dark Knight"
+                    Title = "The Dark Knight",
+                    ReleaseDate = new DateTime(2008, 07, 18)
                 },
                 new Movie {
-                    Title = "Pulp Fiction"
+                    Title = "Pulp Fiction",
+                    ReleaseDate = new DateTime(1994, 10, 14)
                 },
                 new Movie {
-                    Title = "Memento"
+                    Title = "Memento",
+                    ReleaseDate = new DateTime(2001, 05, 25)
                 }
             };
 
