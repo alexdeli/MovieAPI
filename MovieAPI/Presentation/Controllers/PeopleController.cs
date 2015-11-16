@@ -35,7 +35,7 @@ namespace MovieAPI.Presentation.Controllers
         {
             if(ModelState.IsValid)
             {
-                _service.AddOrUpdate(personDTO)
+                _service.AddOrUpdate(personDTO);
             }
             else
             {
