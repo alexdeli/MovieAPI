@@ -216,6 +216,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Presentation\Controllers\MoviesController.cs" />
+    <Compile Include="Presentation\Controllers\PeopleController.cs" />
     <Compile Include="Presentation\Models\AccountBindingModels.cs" />
     <Compile Include="Presentation\Models\AccountViewModels.cs" />
     <Compile Include="Domain\Models\ApplicationUser.cs" />
