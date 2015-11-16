@@ -16,13 +16,18 @@ namespace MovieAPI.Services {
             _mapper = mapper;
         }
 
+        private IQueryable<Genre> Genres {
+            get {
+                return _repo.Query<Genre>()
+                    .Include(g => g.Movies);
+            }
+        }
         public GenreDTO Find(int id) {
-            return (from g in _repo.Query<Genre>().Include(g => g.Movies)
-                    select _mapper.Map(g)).FirstOrDefault();
+            return _mapper.Map(Genres.FirstOrDefault(g => g.Id == id));
         }
 
         public List<GenreDTO> List() {
-            return (from g in _repo.Query<Genre>().Include(g => g.Movies)
+            return (from g in Genres.ToList()
                     select _mapper.Map(g)).ToList();
         }
 
