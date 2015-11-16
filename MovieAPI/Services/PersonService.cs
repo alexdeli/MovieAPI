@@ -33,8 +33,6 @@ namespace MovieAPI.Services
                                   select _movieService.Map(m)).ToList();
             dto.MoviesProduced = (from m in person.MoviesProduced?.AsQueryable()
                                   select _movieService.Map(m)).ToList();
-
-
             return dto;
         }
 
