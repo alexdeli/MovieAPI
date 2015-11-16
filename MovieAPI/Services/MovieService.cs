@@ -27,8 +27,7 @@ namespace MovieAPI.Services {
         }
 
         public MovieDTO Find(int id) {
-            return _mapper.Map((from m in Movies
-                                select m).FirstOrDefault());
+            return _mapper.Map(Movies.FirstOrDefault(m => m.Id == id));
         }
 
         public List<MovieDTO> List() {
