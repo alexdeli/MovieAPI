@@ -9,54 +9,25 @@ using System.Web;
 namespace MovieAPI.Services {
     public class GenreService {
         private IRepository _repo;
-        private MovieService _movieService;
+        private MapperService _mapper;
 
-        public GenreService(IRepository repo, MovieService movieService) {
+        public GenreService(IRepository repo, MapperService mapper) {
             _repo = repo;
-            _movieService = movieService;
-        }
-
-        public GenreDTO Map(Genre genre) {
-            GenreDTO dto = new GenreDTO();
-
-            dto.Id = genre.Id;
-            dto.Name = genre.Name;
-            dto.Movies = (from m in genre.Movies
-                          select _movieService.Map(m)).ToList();
-
-            return dto;
-        }
-
-        public Genre Map(GenreDTO dto) {
-            Genre dbGenre = null;
-            if ((dbGenre = FindInternal(dto.Id)) == null) {
-                dbGenre = new Genre();
-            }
-
-            dbGenre.Name = dto.Name;
-            dbGenre.Movies = (from m in _repo.Query<Movie>()
-                              where dto.Movies.Any(movie => movie.Id == m.Id)
-                              select m).ToList();
-
-            return dbGenre;
+            _mapper = mapper;
         }
 
         public GenreDTO Find(int id) {
-            return Map(FindInternal(id));
-        }
-
-        private Genre FindInternal(int id) {
-            return (from m in _repo.Query<Genre>()
-                    select m).FirstOrDefault();
+            return (from g in _repo.Query<Genre>().Include(g => g.Movies)
+                    select _mapper.Map(g)).FirstOrDefault();
         }
 
         public List<GenreDTO> List() {
-            return (from m in _repo.Query<Genre>()
-                    select Map(m)).ToList();
+            return (from g in _repo.Query<Genre>().Include(g => g.Movies)
+                    select _mapper.Map(g)).ToList();
         }
 
         public void AddOrUpdate(GenreDTO dto) {
-            Genre dbItem = Map(dto);
+            Genre dbItem = _mapper.Map(dto);
             if (dbItem.Id == 0) {
                 _repo.Add(dbItem);
             }

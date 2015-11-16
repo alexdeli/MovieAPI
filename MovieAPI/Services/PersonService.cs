@@ -12,71 +12,48 @@ namespace MovieAPI.Services
     {
         private IRepository _repo;
 
-        private MovieService _movieService;
-
-        public PersonService(IRepository repo, MovieService movieService)
+        private MapperService _mapper;
+        
+        public PersonService(IRepository repo, MapperService mapper)
         {
             _repo = repo;
-            _movieService = movieService;
+            _mapper = mapper;
         }
 
-        //Map: Person DBO to a Person DTO
-        public PersonDTO Map(Person person)
-        {
-            PersonDTO dto = new PersonDTO();
-            dto.Id = person.Id;
-            dto.Name = person.Name;
-            dto.Age = person.Age;
-            dto.MoviesActedIn = (from m in person.MoviesActedIn?.AsQueryable()
-                                 select _movieService.Map(m)).ToList();
-            dto.MoviesDirected = (from m in person.MoviesDirected?.AsQueryable()
-                                  select _movieService.Map(m)).ToList();
-            dto.MoviesProduced = (from m in person.MoviesProduced?.AsQueryable()
-                                  select _movieService.Map(m)).ToList();
-            return dto;
-        }
-
-        //Map: Person DTO to Person DBO
-        public Person Map(PersonDTO dto)
-        {
-            Person dbPerson = null;
-            if ((dbPerson = FindInternal(dto.Id)) == null)
-            {
-                dbPerson = new Person();
+        private IQueryable<Person> Persons {
+            get {
+                return _repo.Query<Person>()
+                    .Include(p => p.MoviesActedIn)
+                    .Include(p => p.MoviesDirected)
+                    .Include(p => p.MoviesProduced);
             }
-            dbPerson.Name = dto.Name;
-            dbPerson.Age = dto.Age;
-
-            dbPerson.MoviesActedIn = (from m in dto.MoviesActedIn?.AsQueryable()
-                                      select _movieService.Map(m)).ToList();
-            dbPerson.MoviesDirected = (from m in dto.MoviesDirected?.AsQueryable()
-                                       select _movieService.Map(m)).ToList();
-            dbPerson.MoviesProduced = (from m in dto.MoviesProduced?.AsQueryable()
-                                       select _movieService.Map(m)).ToList();
-
-            return dbPerson;
         }
 
         //Find by Id: PersonDTO
         public PersonDTO Find(int id)
         {
-            return Map(FindInternal(id));
+            return _mapper.Map(Persons.FirstOrDefault(p => p.Id == id));
         }
 
         //List: PersonDT
         public List<PersonDTO> List()
         {
-            return (from p in _repo.Query<Person>()
-                    select Map(p)).ToList();
-        }
-        //Find Internal: Person
-        public Person FindInternal(int id)
-        {
-            return (from p in _repo.Query<Person>()
-                    select p).FirstOrDefault();
+            return (from p in Persons.ToList()
+                    select _mapper.Map(p)).ToList();
         }
 
+        public void AddOrUpdate(PersonDTO dto) {
+            Person dbItem = _mapper.Map(dto);
+            if (dbItem.Id == 0) {
+                _repo.Add(dbItem);
+            }
+            _repo.SaveChanges();
+            dto.Id = dbItem.Id;
+        }
 
-
+        public void Delete(int id) {
+            _repo.Delete<Person>(id);
+            _repo.SaveChanges();
+        }
     }
 }

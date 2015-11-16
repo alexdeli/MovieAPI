@@ -205,9 +205,9 @@
     <Compile Include="Domain\Models\Person.cs" />
     <Compile Include="Infrastructure\DataContext.cs" />
     <Compile Include="Infrastructure\Repository.cs" />
-    <Compile Include="Migrations\201511160425241_initial.cs" />
-    <Compile Include="Migrations\201511160425241_initial.Designer.cs">
-      <DependentUpon>201511160425241_initial.cs</DependentUpon>
+    <Compile Include="Migrations\201511160439028_initial.cs" />
+    <Compile Include="Migrations\201511160439028_initial.Designer.cs">
+      <DependentUpon>201511160439028_initial.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Presentation\Controllers\AccountController.cs" />
@@ -223,6 +223,7 @@
     <Compile Include="Domain\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Presentation\Results\ChallengeResult.cs" />
     <Compile Include="Services\GenreService.cs" />
+    <Compile Include="Services\MapperService.cs" />
     <Compile Include="Services\Models\GenreDTO.cs" />
     <Compile Include="Services\Models\MovieDTO.cs" />
     <Compile Include="Services\Models\PersonDTO.cs" />
@@ -277,8 +278,8 @@
     <Service Include="{4A0DDDB5-7A95-4FBF-97CC-616D07737A77}" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201511160425241_initial.resx">
-      <DependentUpon>201511160425241_initial.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201511160439028_initial.resx">
+      <DependentUpon>201511160439028_initial.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
