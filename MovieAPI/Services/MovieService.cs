@@ -15,7 +15,7 @@ namespace MovieAPI.Services {
             _repo = repo;
         }
 
-        public MovieDTO Map(Movie movie) {
+        private MovieDTO Map(Movie movie) {
             MovieDTO dto = new MovieDTO();
             dto.Id = movie.Id;
             dto.Title = movie.Title;
@@ -24,7 +24,7 @@ namespace MovieAPI.Services {
             return dto;
         }
 
-        public Movie Map(MovieDTO dto) {
+        private Movie Map(MovieDTO dto) {
             Movie dbMovie = null;
             if ((dbMovie = FindInternal(dto.Id)) == null) {
                 dbMovie = new Movie();
@@ -35,9 +35,31 @@ namespace MovieAPI.Services {
             return dbMovie;
         }
 
+        public MovieDTO Find(int id) {
+            return Map(FindInternal(id));
+        }
+
         private Movie FindInternal(int id) {
             return (from m in _repo.Query<Movie>()
                     select m).FirstOrDefault();
+        }
+
+        public List<MovieDTO> List() {
+            return (from m in _repo.Query<Movie>()
+                    select Map(m)).ToList();
+        }
+
+        public void AddOrUpdate(MovieDTO dto) {
+            Movie dbItem = Map(dto);
+            if (dbItem.Id == 0) {
+                _repo.Add(dbItem);
+            }
+            _repo.SaveChanges();
+        }
+
+        public void Delete(int id) {
+            _repo.Delete<Movie>(id);
+            _repo.SaveChanges();
         }
     }
 }
