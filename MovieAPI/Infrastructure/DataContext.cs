@@ -18,5 +18,7 @@ namespace MovieAPI.Infrastructure {
         }
 
         public IDbSet<Movie> Movies { get; set; }
+        public IDbSet<Person> People { get; set; }
+        public IDbSet<Genre> Genre { get; set; }
     }
 }
