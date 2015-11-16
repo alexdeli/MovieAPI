@@ -31,8 +31,8 @@ namespace MovieAPI.Services {
                              select _personService.Map(a)).ToList();
             dto.Producers = (from a in movie.Producers
                              select _personService.Map(a)).ToList();
-            //dto.Genres = (from g in movie.Genres
-            //              select _genreService.Map(g)).toList();
+            dto.Genres = (from g in movie.Genres
+                          select _genreService.Map(g)).ToList();
             return dto;
         }
 
