@@ -217,6 +217,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Domain\Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Presentation\Results\ChallengeResult.cs" />
+    <Compile Include="Services\GenreService.cs" />
     <Compile Include="Services\Models\GenreDTO.cs" />
     <Compile Include="Services\Models\MovieDTO.cs" />
     <Compile Include="Services\Models\PersonDTO.cs" />
