@@ -1,16 +1,41 @@
-﻿<!DOCTYPE html>
-<html>
+﻿@*<!DOCTYPE html>
+<html ng-app="MovieApp">
 <head>
+    <meta charset="utf-8">
+    <title></title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width" />
     <title></title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/ngApp/app.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script src="~/Scripts/ngApp/app.js"></script>
+    <script src="~/Scripts/ngApp/calc.js"></script>
+
 </head>
-<body>
+<body class="container">
+    <ng-view></ng-view>
+  </body>
+</html>*@
+<!DOCTYPE html>
+<html ng-app="MyApp">
+<head>
+    <meta charset="utf-8">
+    <title></title>
+</head>
+<body ng-controller="MainController as main">
+    <a href="/page1">Page 1</a> | <a href="/page2">Page 2</a> | <a href="/nowhere">Nowhere</a>
+    <hr />
+    $route.current.templateUrl = {{main.$route.current.templateUrl}}
+    <hr />
 
-    Hello World!
+    <ng-view></ng-view>
 
-    @Scripts.Render("~/bundles/jquery")
+    <script src="~/Scripts/angular.js"></script>
+    <script src="~/Scripts/angular-route.js"></script>
+    <script src="/Scripts/ngApp/mainApp.js"></script>
+
 </body>
 </html>
